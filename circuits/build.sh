@@ -7,9 +7,9 @@ if ! nargo compile; then
 fi
 
 echo "Generating vkey..."
-bb write_vk --oracle_hash keccak -b ./target/noir_solidity.json -o ./target
+sudo docker run --rm -v $(pwd)/target:/app/target -w /app bb-docker write_vk --oracle_hash keccak -b ./target/noir_solidity.json -o ./target
 
 echo "Generating solidity verifier..."
-bb write_solidity_verifier -k ./target/vk -o ../contract/Verifier.sol
+sudo docker run --rm -v $(pwd)/target:/app/target -w /app bb-docker write_solidity_verifier -k ./target/vk -o ./target/Verifier.sol
 
 echo "Done"
